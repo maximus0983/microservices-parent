@@ -1,0 +1,31 @@
+spring:
+#  main: web-application-type=reactive
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        ## ADMIN CONSOLE SERVICE
+        - id: admin-console
+          uri: lb://admin-console
+          predicates:
+            - Path=/admin-console/**
+        ## SHOPPING CART SERVICE
+        - id: shopping-cart
+          uri: lb://shopping-cart
+          predicates:
+            - Path=/shopping-cart/**
+        ## USER SERVICE
+        - id: user
+          uri: lb://user
+          predicates:
+            - Path=/user/**
+
+
+server:
+   port: 9000
+eureka:
+   client:
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+

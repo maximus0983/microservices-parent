@@ -1,0 +1,21 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.epam.javacc.microservices</groupId>
+        <artifactId>microservices-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>platform-service-parent</artifactId>
+    <name>platform-service-parent</name>
+    <modules>
+        <module>discovery</module>
+        <module>apigateway</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <properties>
+    <spring-cloud.version>2022.0.1</spring-cloud.version>
+    </properties>
+
+</project>

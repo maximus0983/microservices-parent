@@ -1,0 +1,53 @@
+version: '2'
+services:
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+  graphite:
+    image: graphiteapp/graphite-statsd
+  discovery:
+    container_name: discovery
+    build: /platform-service-parent/discovery/
+    ports:
+      - "8761:8761"
+  apigateway:
+    build: /platform-service-parent/apigateway/
+    ports:
+      - "9000:9000"
+    links:
+      - discovery
+    depends_on:
+      - discovery
+    environment:
+      SPRING_APPLICATION_JSON: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://discovery:8761/eureka"}}}}'
+  admin-console:
+    build: /business-services/admin-console/
+    ports:
+      - "8080:8080"
+    links:
+      - discovery
+    depends_on:
+      - discovery
+    environment:
+      SPRING_APPLICATION_JSON: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://discovery:8761/eureka"}}}}'
+  shopping-cart:
+    build: /business-services/shopping-cart/
+    ports:
+      - "8081:8081"
+    links:
+      - discovery
+    depends_on:
+      - discovery
+    environment:
+      SPRING_APPLICATION_JSON: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://discovery:8761/eureka"}}}}'
+  user:
+    build: /business-services/users/
+    ports:
+      - "8082:8082"
+    links:
+      - discovery
+    depends_on:
+      - discovery
+    environment:
+      SPRING_APPLICATION_JSON: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://discovery:8761/eureka"}}}}'
